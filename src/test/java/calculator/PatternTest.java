@@ -10,7 +10,7 @@ public class PatternTest {
 
     @Nested
     @DisplayName("공백은 Pattern 검증 전 제거되었다고 가정")
-    class BasicPattern {
+    class BasicPatternTest {
         @Test
         @DisplayName("기본 구분자(콤마)와 양수로 구성되어 있으면 성공")
         void when_include_basic_delimeter_COMMA() {
@@ -49,6 +49,41 @@ public class PatternTest {
             BasicPatternValidator basicPatternValidator = new BasicPatternValidator();
             boolean isValidatedPattern = basicPatternValidator.validate("1,2:3");
             assertThat(isValidatedPattern).isEqualTo(false);
+        }
+    }
+
+    @Nested
+    class CustomPatternTest {
+        @Test
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공(?)")
+        void when_custom_pattern_1() {
+            CustomPatternValidator customPatternValidator = new CustomPatternValidator();
+            boolean isValidatedPattern = customPatternValidator.validate("//;\n1;2;3");
+            assertThat(isValidatedPattern).isEqualTo(true);
+        }
+
+        @Test
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (;)")
+        void when_custom_pattern_2() {
+            CustomPatternValidator customPatternValidator = new CustomPatternValidator();
+            boolean isValidatedPattern = customPatternValidator.validate("//?\n1?2?3");
+            assertThat(isValidatedPattern).isEqualTo(true);
+        }
+
+        @Test
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (:)")
+        void when_custom_pattern_3() {
+            CustomPatternValidator customPatternValidator = new CustomPatternValidator();
+            boolean isValidatedPattern = customPatternValidator.validate("//:\n1:2:3");
+            assertThat(isValidatedPattern).isEqualTo(true);
+        }
+
+        @Test
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (,)")
+        void when_custom_pattern_4() {
+            CustomPatternValidator customPatternValidator = new CustomPatternValidator();
+            boolean isValidatedPattern = customPatternValidator.validate("//,\n1,2,3");
+            assertThat(isValidatedPattern).isEqualTo(true);
         }
     }
 }
