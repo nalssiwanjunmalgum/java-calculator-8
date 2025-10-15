@@ -11,10 +11,18 @@ public class NumberExtractor {
     }
 
     public List<Integer> extractFrom(String input) {
-        if (input.isBlank()) {
+        if (isBlank(input)) {
             extractedNumbers.add(0);
+            return extractedNumbers;
         }
 
+        String trimmedInput = input.replaceAll(" ", "");
+        extractedNumbers.add(Integer.parseInt(trimmedInput));
+
         return extractedNumbers;
+    }
+
+    private boolean isBlank(String input) {
+        return input.isBlank();
     }
 }
