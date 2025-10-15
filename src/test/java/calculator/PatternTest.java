@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 public class PatternTest {
 
     @Nested
+    @DisplayName("공백은 Pattern 검증 전 제거되었다고 가정")
     class BasicPattern {
         @Test
         @DisplayName("기본 구분자(콤마)와 양수로 구성되어 있으면 성공")
