@@ -86,4 +86,15 @@ public class PatternTest {
             assertThat(isValidatedPattern).isEqualTo(true);
         }
     }
+
+    @Nested
+    class NumberPatternTest {
+        @Test
+        @DisplayName("일반적인 양수라면 성공")
+        void when_number_pattern() {
+            NumberPatternValidator numberPatternValidator = new NumberPatternValidator();
+            boolean isValidatedPattern = numberPatternValidator.validate("123");
+            assertThat(isValidatedPattern).isEqualTo(true);
+        }
+    }
 }

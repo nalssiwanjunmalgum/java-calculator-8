@@ -17,12 +17,21 @@ public class NumberExtractor {
         }
 
         String trimmedInput = input.replaceAll(" ", "");
-        extractedNumbers.add(Integer.parseInt(trimmedInput));
+        String delimeter = findDelimeter(trimmedInput);
 
         return extractedNumbers;
     }
 
     private boolean isBlank(String input) {
         return input.isBlank();
+    }
+
+    private String findDelimeter(String trimmedInput) {
+        // 수로만 구성된 경우
+
+        // 기본 구분자 파악
+
+        // 커스텀 구분자 파악
+        return null;
     }
 }
