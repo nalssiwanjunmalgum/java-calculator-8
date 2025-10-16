@@ -21,7 +21,7 @@ public class NumberExtractor {
         // 공백을 제거하고 delimiter를 파악합니다
         String trimmedInput = input.replaceAll(" ", "");
         String finalInput = trimmedInput.replaceAll("[,:]", "*");
-
+        // 구분자를 추출합니다
         String delimiter = findDelimiter(finalInput);
 
         if (delimiter == null) {
