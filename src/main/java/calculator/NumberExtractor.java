@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class NumberExtractor {
-    private final List<Integer> extractedNumbers;
+    private final List<Long> extractedNumbers;
 
     public NumberExtractor() {
         this.extractedNumbers = new ArrayList<>();
     }
 
-    public List<Integer> extractFrom(String input) {
+    public List<Long> extractFrom(String input) {
         // 공백의 경우 0을 반환합니다(Edge Case)
         if (isBlank(input)) {
-            extractedNumbers.add(0);
+            extractedNumbers.add(0L);
             return extractedNumbers;
         }
         // 공백을 제거하고 delimiter를 파악합니다
@@ -35,8 +35,8 @@ public class NumberExtractor {
         }
 
         String[] split = finalInput.split(Pattern.quote(delimiter));
-        List<Integer> finalNumbers = Arrays.stream(split)
-                .map(Integer::parseInt)
+        List<Long> finalNumbers = Arrays.stream(split)
+                .map(Long::parseLong)
                 .toList();
 
         extractedNumbers.addAll(finalNumbers);

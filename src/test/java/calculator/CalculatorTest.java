@@ -1,9 +1,11 @@
 package calculator;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class CalculatorTest {
@@ -13,7 +15,7 @@ public class CalculatorTest {
         List<Long> numbers = new ArrayList<>(List.of(1L, 2L, 3L));
         Calculator calculator = new Calculator();
         long sum = calculator.execute(numbers);
-        Assertions.assertThat(sum).isEqualTo(6);
+        assertThat(sum).isEqualTo(6);
     }
 
     @Test
@@ -22,7 +24,23 @@ public class CalculatorTest {
         List<Long> numbers = new ArrayList<>(List.of(2200000000L));
         Calculator calculator = new Calculator();
         long sum = calculator.execute(numbers);
-        Assertions.assertThat(sum).isEqualTo(2200000000L);
+        assertThat(sum).isEqualTo(2200000000L);
+    }
+
+    @Nested
+    @DisplayName("Extractor와 함께 묶어서 테스트를 진행합니다")
+    class withExtractorTest {
+
+        @Test
+        @DisplayName("3 + 1 + 35")
+        void testcase_1() {
+            NumberExtractor numberExtractor = new NumberExtractor();
+            List<Long> extractedNumbers = numberExtractor.extractFrom(" 3,  1:3 5");
+            Calculator calculator = new Calculator();
+            long sum = calculator.execute(extractedNumbers);
+            assertThat(sum).isEqualTo(39L);
+        }
+
     }
 
 

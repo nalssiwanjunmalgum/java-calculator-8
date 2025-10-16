@@ -12,16 +12,16 @@ public class ExtractorTest {
     @DisplayName("빈 문자열을 입력한 경우 0을 반환합니다")
     void when_inputIsBlank_0() {
         NumberExtractor numberExtractor = new NumberExtractor();
-        List<Integer> extractedNumbers = numberExtractor.extractFrom("");
-        assertThat(extractedNumbers).containsExactly(0);
+        List<Long> extractedNumbers = numberExtractor.extractFrom("");
+        assertThat(extractedNumbers).containsExactly(0L);
     }
 
     @Test
     @DisplayName("구분자 없이 양수만 입력된 경우")
     void when_onlyNumbers_excludeBlank() {
         NumberExtractor numberExtractor = new NumberExtractor();
-        List<Integer> extractedNumbers = numberExtractor.extractFrom("1 2 3 ");
-        assertThat(extractedNumbers).containsExactly(123);
+        List<Long> extractedNumbers = numberExtractor.extractFrom("1 2 3 ");
+        assertThat(extractedNumbers).containsExactly(123L);
     }
 
     @Test
@@ -36,23 +36,23 @@ public class ExtractorTest {
     @DisplayName("커스텀 구분자로 정상적으로 구분하는지 확인")
     void when_custom_pattern_extractedNumbers() {
         NumberExtractor numberExtractor = new NumberExtractor();
-        List<Integer> extractedNumbers = numberExtractor.extractFrom("//!\n      3!  1  3 ! 5");
-        assertThat(extractedNumbers).containsExactly(3, 13, 5);
+        List<Long> extractedNumbers = numberExtractor.extractFrom("//!\n      3!  1  3 ! 5");
+        assertThat(extractedNumbers).containsExactly(3L, 13L, 5L);
     }
 
     @Test
     @DisplayName("커스텀 구분자로 정상적으로 구분하는지 확인")
     void when_custom_pattern_extractedNumbers_2() {
         NumberExtractor numberExtractor = new NumberExtractor();
-        List<Integer> extractedNumbers = numberExtractor.extractFrom("//?\n      3?  1?3? 5");
-        assertThat(extractedNumbers).containsExactly(3, 1, 3, 5);
+        List<Long> extractedNumbers = numberExtractor.extractFrom("//?\n      3?  1?3? 5");
+        assertThat(extractedNumbers).containsExactly(3L, 1L, 3L, 5L);
     }
 
     @Test
     @DisplayName("콤마, 콜론이 혼용된 경우 정상적으로 구분되는지 확인")
     void when_basic_pattern_extractedNumbers() {
         NumberExtractor numberExtractor = new NumberExtractor();
-        List<Integer> extractedNumbers = numberExtractor.extractFrom(" 3,  1:3 5");
-        assertThat(extractedNumbers).containsExactly(3, 1, 35);
+        List<Long> extractedNumbers = numberExtractor.extractFrom(" 3,  1:3 5");
+        assertThat(extractedNumbers).containsExactly(3L, 1L, 35L);
     }
 }
