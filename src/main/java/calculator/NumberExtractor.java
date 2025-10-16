@@ -20,7 +20,9 @@ public class NumberExtractor {
         }
         // 공백을 제거하고 delimiter를 파악합니다
         String trimmedInput = input.replaceAll(" ", "");
-        String delimiter = findDelimiter(trimmedInput);
+        String finalInput = trimmedInput.replaceAll("[,:]", "*");
+
+        String delimiter = findDelimiter(finalInput);
 
         if (delimiter == null) {
             throw new IllegalArgumentException("구분자가 존재하지 않습니다.");
@@ -28,11 +30,11 @@ public class NumberExtractor {
 
         // (문제) Custom의 경우 앞에 위치한 커스텀 구분자를 분석한 이후에 분석된 구분자로 수를 구분할 수 있어야 한다.
         // '\n' 까지 제외하고 구분해야 한다
-        if (trimmedInput.startsWith("//")) {
-            trimmedInput = trimmedInput.substring(4);
+        if (finalInput.startsWith("//")) {
+            finalInput = finalInput.substring(4);
         }
 
-        String[] split = trimmedInput.split(Pattern.quote(delimiter));
+        String[] split = finalInput.split(Pattern.quote(delimiter));
         List<Integer> finalNumbers = Arrays.stream(split)
                 .map(Integer::parseInt)
                 .toList();
@@ -57,11 +59,7 @@ public class NumberExtractor {
 
         // 기본 구분자 파악
         if (basicPatternValidator.validate(trimmedInput)) {
-            if (basicPatternValidator.isCommaPattern(trimmedInput)) {
-                return ",";
-            }
-
-            return ":";
+            return "*";
         }
 
         // 커스텀 구분자 파악
