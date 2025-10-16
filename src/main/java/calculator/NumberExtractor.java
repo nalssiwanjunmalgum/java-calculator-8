@@ -3,6 +3,7 @@ package calculator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class NumberExtractor {
     private final List<Integer> extractedNumbers;
@@ -26,8 +27,12 @@ public class NumberExtractor {
         }
 
         // (문제) Custom의 경우 앞에 위치한 커스텀 구분자를 분석한 이후에 분석된 구분자로 수를 구분할 수 있어야 한다.
+        // '\n' 까지 제외하고 구분해야 한다
+        if (trimmedInput.startsWith("//")) {
+            trimmedInput = trimmedInput.substring(4);
+        }
 
-        String[] split = trimmedInput.split(delimiter);
+        String[] split = trimmedInput.split(Pattern.quote(delimiter));
         List<Integer> finalNumbers = Arrays.stream(split)
                 .map(Integer::parseInt)
                 .toList();
@@ -40,7 +45,7 @@ public class NumberExtractor {
         return input.isBlank();
     }
 
-    private String findDelimiter(String trimmedInput) {
+    protected String findDelimiter(String trimmedInput) {
         NumberPatternValidator numberPatternValidator = new NumberPatternValidator();
         BasicPatternValidator basicPatternValidator = new BasicPatternValidator();
         CustomPatternValidator customPatternValidator = new CustomPatternValidator();

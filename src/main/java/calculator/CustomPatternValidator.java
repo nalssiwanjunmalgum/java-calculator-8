@@ -12,8 +12,8 @@ public class CustomPatternValidator {
 
     public String extractDelimiter(String trimmedInput) {
         Matcher matcher = CUSTOM_PATTERN.matcher(trimmedInput);
-        if (matcher.matches()) {
-            return CUSTOM_PATTERN.matcher(trimmedInput).group(2);
+        if (matcher.find()) {
+            return matcher.group(2);
         }
 
         return null;

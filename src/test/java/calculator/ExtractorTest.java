@@ -24,5 +24,29 @@ public class ExtractorTest {
         assertThat(extractedNumbers).containsExactly(123);
     }
 
+    @Test
+    @DisplayName("커스텀 구분자가 정상적으로 출력되는지 확인")
+    void when_custom_pattern_Custom_Delimiter() {
+        NumberExtractor numberExtractor = new NumberExtractor();
+        String foundDelimiter = numberExtractor.findDelimiter("//!\n3!13!5");
+        assertThat(foundDelimiter).isEqualTo("!");
+    }
+
+    @Test
+    @DisplayName("커스텀 구분자로 정상적으로 구분하는지 확인")
+    void when_custom_pattern_extractedNumbers() {
+        NumberExtractor numberExtractor = new NumberExtractor();
+        List<Integer> extractedNumbers = numberExtractor.extractFrom("//!\n      3!  1  3 ! 5");
+        assertThat(extractedNumbers).containsExactly(3, 13, 5);
+    }
+
+    @Test
+    @DisplayName("커스텀 구분자로 정상적으로 구분하는지 확인")
+    void when_custom_pattern_extractedNumbers_2() {
+        NumberExtractor numberExtractor = new NumberExtractor();
+        List<Integer> extractedNumbers = numberExtractor.extractFrom("//?\n      3?  1?3? 5");
+        assertThat(extractedNumbers).containsExactly(3, 1, 3, 5);
+    }
+
 
 }
