@@ -18,23 +18,27 @@ public class NumberExtractor {
             extractedNumbers.add(0L);
             return extractedNumbers;
         }
-        // 공백을 제거하고 delimiter를 파악합니다
+        // 공백을 제거하고 delimiter를 파악합니다 (공통)
         String trimmedInput = input.replaceAll(" ", "");
-        String finalInput = trimmedInput.replaceAll("[,:]", "*");
+        // 기본 vs Custom
+        if (isBasicPattern(trimmedInput)) {
+            trimmedInput = trimmedInput.replaceAll("[,:]", "*");
+        }
+
         // 구분자를 추출합니다
-        String delimiter = findDelimiter(finalInput);
+        String delimiter = findDelimiter(trimmedInput);
 
         if (delimiter == null) {
             throw new IllegalArgumentException("구분자가 존재하지 않습니다.");
         }
 
-        // (문제) Custom의 경우 앞에 위치한 커스텀 구분자를 분석한 이후에 분석된 구분자로 수를 구분할 수 있어야 한다.
         // '\n' 까지 제외하고 구분해야 한다
-        if (finalInput.startsWith("//")) {
-            finalInput = finalInput.substring(4);
+        if (trimmedInput.startsWith("//")) {
+            trimmedInput = trimmedInput.substring(4);
         }
 
-        String[] split = finalInput.split(Pattern.quote(delimiter));
+        // 정제된 문자열, 구분자만 있으면 됨
+        String[] split = trimmedInput.split(Pattern.quote(delimiter));
         List<Long> finalNumbers = Arrays.stream(split)
                 .map(Long::parseLong)
                 .toList();
@@ -68,5 +72,9 @@ public class NumberExtractor {
         }
 
         return null;
+    }
+
+    private boolean isBasicPattern(String trimmedInput) {
+        return new BasicPatternValidator().validate(trimmedInput);
     }
 }
