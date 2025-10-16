@@ -48,5 +48,11 @@ public class ExtractorTest {
         assertThat(extractedNumbers).containsExactly(3, 1, 3, 5);
     }
 
-
+    @Test
+    @DisplayName("콤마, 콜론이 혼용된 경우 정상적으로 구분되는지 확인")
+    void when_basic_pattern_extractedNumbers() {
+        NumberExtractor numberExtractor = new NumberExtractor();
+        List<Integer> extractedNumbers = numberExtractor.extractFrom(" 3,  1:3 5");
+        assertThat(extractedNumbers).containsExactly(3, 1, 35);
+    }
 }
