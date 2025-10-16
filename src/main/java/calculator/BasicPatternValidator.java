@@ -9,4 +9,8 @@ public class BasicPatternValidator {
     public boolean validate(String input) {
         return COMMA_PATTERN.matcher(input).matches() || COLON_PATTERN.matcher(input).matches();
     }
+
+    public boolean isCommaPattern(String trimmedInput) {
+        return COMMA_PATTERN.matcher(trimmedInput).matches();
+    }
 }
