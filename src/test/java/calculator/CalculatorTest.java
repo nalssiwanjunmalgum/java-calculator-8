@@ -45,7 +45,7 @@ public class CalculatorTest {
         @DisplayName("3 + 13 + 5")
         void testcase_2() {
             NumberExtractor numberExtractor = new NumberExtractor();
-            List<Long> extractedNumbers = numberExtractor.extractFrom("//!\n3!13!5");
+            List<Long> extractedNumbers = numberExtractor.extractFrom("//!\\n3!13!5");
             Calculator calculator = new Calculator();
             long sum = calculator.execute(extractedNumbers);
             assertThat(sum).isEqualTo(21L);

@@ -21,7 +21,7 @@ public class PatternTest {
 
         @Test
         @DisplayName("기본 구분자(콜론)와 양수로 구성되어 있으면 성공")
-        void when_include_basic_delimeter_COLON() {
+        void when_include_basic_delimiter_COLON() {
             BasicPatternValidator basicPatternValidator = new BasicPatternValidator();
             boolean isValidatedPattern = basicPatternValidator.validate("1*2*3");
             assertThat(isValidatedPattern).isEqualTo(true);
@@ -47,10 +47,18 @@ public class PatternTest {
     @Nested
     class CustomPatternTest {
         @Test
-        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공(?)")
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공")
+        void when_custom_pattern_0() {
+            CustomPatternValidator customPatternValidator = new CustomPatternValidator();
+            boolean isValidatedPattern = customPatternValidator.validate("//;\\n1");
+            assertThat(isValidatedPattern).isEqualTo(true);
+        }
+
+        @Test
+        @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (;)")
         void when_custom_pattern_1() {
             CustomPatternValidator customPatternValidator = new CustomPatternValidator();
-            boolean isValidatedPattern = customPatternValidator.validate("//;\n1;2;3");
+            boolean isValidatedPattern = customPatternValidator.validate("//;\\n1;2;3");
             assertThat(isValidatedPattern).isEqualTo(true);
         }
 
@@ -58,7 +66,7 @@ public class PatternTest {
         @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (;)")
         void when_custom_pattern_2() {
             CustomPatternValidator customPatternValidator = new CustomPatternValidator();
-            boolean isValidatedPattern = customPatternValidator.validate("//?\n1?2?3");
+            boolean isValidatedPattern = customPatternValidator.validate("//?\\n1?2?3");
             assertThat(isValidatedPattern).isEqualTo(true);
         }
 
@@ -66,7 +74,7 @@ public class PatternTest {
         @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (:)")
         void when_custom_pattern_3() {
             CustomPatternValidator customPatternValidator = new CustomPatternValidator();
-            boolean isValidatedPattern = customPatternValidator.validate("//:\n1:2:3");
+            boolean isValidatedPattern = customPatternValidator.validate("//:\\n1:2:3");
             assertThat(isValidatedPattern).isEqualTo(true);
         }
 
@@ -74,7 +82,7 @@ public class PatternTest {
         @DisplayName("커스텀 구분자의 규칙에 만족하면 성공 (,)")
         void when_custom_pattern_4() {
             CustomPatternValidator customPatternValidator = new CustomPatternValidator();
-            boolean isValidatedPattern = customPatternValidator.validate("//,\n1,2,3");
+            boolean isValidatedPattern = customPatternValidator.validate("//,\\n1,2,3");
             assertThat(isValidatedPattern).isEqualTo(true);
         }
     }
