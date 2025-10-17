@@ -21,7 +21,7 @@ public class NumberExtractor {
         // 공백을 제거하고 delimiter를 파악합니다 (공통)
         String trimmedInput = input.replaceAll(" ", "");
         // 기본 vs Custom
-        if (isBasicPattern(trimmedInput)) {
+        if (isCommonPattern(trimmedInput)) {
             trimmedInput = trimmedInput.replaceAll("[,:]", "*");
         }
 
@@ -34,7 +34,7 @@ public class NumberExtractor {
 
         // '\n' 까지 제외하고 구분해야 한다
         if (trimmedInput.startsWith("//")) {
-            trimmedInput = trimmedInput.substring(4);
+            trimmedInput = trimmedInput.substring(5);
         }
 
         // 정제된 문자열, 구분자만 있으면 됨
@@ -74,7 +74,7 @@ public class NumberExtractor {
         return null;
     }
 
-    private boolean isBasicPattern(String trimmedInput) {
-        return new BasicPatternValidator().validate(trimmedInput);
+    private boolean isCommonPattern(String trimmedInput) {
+        return new CommonPatternValidator().validate(trimmedInput);
     }
 }
