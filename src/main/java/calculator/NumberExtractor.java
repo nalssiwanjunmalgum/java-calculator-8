@@ -18,8 +18,10 @@ public class NumberExtractor {
             extractedNumbers.add(0L);
             return extractedNumbers;
         }
+
         // 공백을 제거하고 delimiter를 파악합니다 (공통)
-        String trimmedInput = input.replaceAll(" ", "");
+        String trimmedInput = Converter.eraseBlank(input);
+
         // 기본 vs Custom
         if (isCommonPattern(trimmedInput)) {
             trimmedInput = trimmedInput.replaceAll("[,:]", "*");
