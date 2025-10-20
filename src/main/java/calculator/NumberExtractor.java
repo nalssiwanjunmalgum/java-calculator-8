@@ -1,9 +1,7 @@
 package calculator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class NumberExtractor {
     private final List<Long> extractedNumbers;
@@ -21,31 +19,32 @@ public class NumberExtractor {
 
         // 공백을 제거하고 delimiter를 파악합니다 (공통)
         String trimmedInput = Converter.eraseBlank(input);
+        List<Long> numbers = null;
 
-        // 기본 vs Custom
-        if (isCommonPattern(trimmedInput)) {
+        if (RegexValidators.isNumber(trimmedInput)) {
+            // 숫자인 경우
+            CommonParser whitespaceParser = new CommonParser(" ");
+            numbers = whitespaceParser.extractNumber(trimmedInput);
+        }
+
+        // Basic
+        if (RegexValidators.isBasic(trimmedInput)) {
             trimmedInput = trimmedInput.replaceAll("[,:]", "*");
+            CommonParser commonParser = new CommonParser("*");
+            numbers = commonParser.extractNumber(trimmedInput);
         }
 
-        // 구분자를 추출합니다
-        String delimiter = findDelimiter(trimmedInput);
-
-        if (delimiter == null) {
-            throw new IllegalArgumentException("구분자가 존재하지 않습니다.");
+        // Custom인 경우
+        if (RegexValidators.isCustom(trimmedInput)) {
+            Result parsed = CustomParser.parse(input);
+            numbers = parsed.extractNumber();
         }
 
-        // '\n' 까지 제외하고 구분해야 한다
-        if (trimmedInput.startsWith("//")) {
-            trimmedInput = trimmedInput.substring(5);
+        if (numbers == null) {
+            throw new IllegalArgumentException("추출된 수가 존재하지 않습니다.");
         }
 
-        // 정제된 문자열, 구분자만 있으면 됨
-        String[] split = trimmedInput.split(Pattern.quote(delimiter));
-        List<Long> finalNumbers = Arrays.stream(split)
-                .map(Long::parseLong)
-                .toList();
-
-        extractedNumbers.addAll(finalNumbers);
+        extractedNumbers.addAll(numbers);
         return extractedNumbers;
     }
 
@@ -53,6 +52,7 @@ public class NumberExtractor {
         return input.isBlank();
     }
 
+    // 리팩토링 하는 과정에서 사용하지 않음
     protected String findDelimiter(String trimmedInput) {
         NumberPatternValidator numberPatternValidator = new NumberPatternValidator();
         BasicPatternValidator basicPatternValidator = new BasicPatternValidator();
@@ -74,9 +74,5 @@ public class NumberExtractor {
         }
 
         return null;
-    }
-
-    private boolean isCommonPattern(String trimmedInput) {
-        return new CommonPatternValidator().validate(trimmedInput);
     }
 }

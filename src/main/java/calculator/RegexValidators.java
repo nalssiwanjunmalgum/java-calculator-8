@@ -18,8 +18,4 @@ public class RegexValidators {
     public static boolean isBasic(String input) {
         return matches(RegexPatterns.BASIC, input);
     }
-
-    public static boolean isCommon(String input) {
-        return matches(RegexPatterns.COMMON, input);
-    }
 }
