@@ -1,5 +1,7 @@
-package calculator;
+package calculator.parser;
 
+import calculator.validator.refactorV1.RegexPatterns;
+import calculator.validator.refactorV1.Result;
 import java.util.regex.Matcher;
 
 public class CustomParser {

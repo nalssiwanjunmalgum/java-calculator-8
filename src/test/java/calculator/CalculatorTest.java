@@ -14,7 +14,7 @@ public class CalculatorTest {
     void when_get_numbers_return_sum() {
         List<Long> numbers = new ArrayList<>(List.of(1L, 2L, 3L));
         Calculator calculator = new Calculator();
-        long sum = calculator.execute(numbers);
+        long sum = calculator.calculate(numbers);
         assertThat(sum).isEqualTo(6);
     }
 
@@ -23,7 +23,7 @@ public class CalculatorTest {
     void when_get_single_number_return_sum() {
         List<Long> numbers = new ArrayList<>(List.of(2200000000L));
         Calculator calculator = new Calculator();
-        long sum = calculator.execute(numbers);
+        long sum = calculator.calculate(numbers);
         assertThat(sum).isEqualTo(2200000000L);
     }
 
@@ -37,7 +37,7 @@ public class CalculatorTest {
             NumberExtractor numberExtractor = new NumberExtractor();
             List<Long> extractedNumbers = numberExtractor.extractFrom(" 3,  1:3 5");
             Calculator calculator = new Calculator();
-            long sum = calculator.execute(extractedNumbers);
+            long sum = calculator.calculate(extractedNumbers);
             assertThat(sum).isEqualTo(39L);
         }
 
@@ -47,7 +47,7 @@ public class CalculatorTest {
             NumberExtractor numberExtractor = new NumberExtractor();
             List<Long> extractedNumbers = numberExtractor.extractFrom("//!\\n3!13!5");
             Calculator calculator = new Calculator();
-            long sum = calculator.execute(extractedNumbers);
+            long sum = calculator.calculate(extractedNumbers);
             assertThat(sum).isEqualTo(21L);
         }
 
@@ -57,7 +57,7 @@ public class CalculatorTest {
             NumberExtractor numberExtractor = new NumberExtractor();
             List<Long> extractedNumbers = numberExtractor.extractFrom(" ");
             Calculator calculator = new Calculator();
-            long sum = calculator.execute(extractedNumbers);
+            long sum = calculator.calculate(extractedNumbers);
             assertThat(sum).isEqualTo(0L);
         }
     }

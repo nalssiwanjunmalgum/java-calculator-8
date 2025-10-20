@@ -1,5 +1,7 @@
 package calculator;
 
+import calculator.view.InputView;
+import calculator.view.OutputView;
 import java.util.List;
 
 public class Application {
@@ -13,7 +15,7 @@ public class Application {
         Calculator calculator = new Calculator();
 
         List<Long> extractedNumbers = numberExtractor.extractFrom(userInput);
-        long result = calculator.execute(extractedNumbers);
+        long result = calculator.calculate(extractedNumbers);
 
         outputView.printSum(result);
     }
