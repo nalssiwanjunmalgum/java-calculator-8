@@ -44,12 +44,12 @@ public class NumberExtractor {
 
         // Custom인 경우
         if (RegexValidators.isCustom(trimmedInput)) {
-            Result parsed = CustomParser.parse(input);
+            Result parsed = CustomParser.parse(trimmedInput);
             numbers = parsed.extractNumber();
         }
 
         if (numbers == null) {
-            throw new IllegalArgumentException("추출된 수가 존재하지 않습니다.");
+            throw new IllegalArgumentException("구분자가 존재하지 않습니다.");
         }
 
         extractedNumbers.addAll(numbers);
